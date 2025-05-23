@@ -1,30 +1,70 @@
+# 🚀 ml25521
 
-# 📁 `ml25521` Project Documentation
-
-## 📝 Description  
-It's Friday afternoon now!
+It's Friday afternoon now.
 
 ---
 
-## 🚀 Quickstart Guide
+## 📋 Table of Contents
 
-### 1. Clone the Repository  
+- [🚀 ml25521](#-ml25521)
+  - [📋 Table of Contents](#-table-of-contents)
+  - [✨ Features](#-features)
+  - [🗂 Repository Layout](#-repository-layout)
+  - [⚡ Quick-Start](#-quick-start)
+    - [1️⃣ Clone](#1️⃣clone)
+    - [2️⃣ Create a Python 3.10+ virtual environment](#2️⃣create-a-python-310-virtual-environment)
+    - [3️⃣ Install requirements](#3️⃣install-requirements)
+  - [🏋️‍♀️ Model Training](#️️-model-training)
+  - [🔄 Loading Saved Artifacts](#-loading-saved-artifacts)
+  - [🛠 Dataset Utilities](#-dataset-utilities)
+  - [🌐 Data Source](#-data-source)
+
+---
+
+## ✨ Features
+
+- **Two classic regressors** – plain Linear Regression (`models/linear.py`) and Support Vector Regression (`models/svr.py`).  
+- **Three datasets** – MNIST (sub-sampled to regression targets), a cleaned UCI bundle, and a synthetic Credit dataset.  
+- **One-command training** that serialises both model weights and feature scalers to `model_params/`.  
+- **Minimal dependency set** (see `piplist.txt`) to keep the environment footprint small.
+
+---
+
+## 🗂 Repository Layout
+
+```
+ml25521/
+├── data/                # Datasets (not tracked in Git)
+├── model_params/        # Saved *.npz weights & scalers
+├── model_test/
+│   └── commends/        # Evaluation & data-loading helpers
+├── models/              # Training scripts (linear.py, svr.py)
+├── piplist.txt          # Python dependencies
+└── README.md            # Project documentation
+```
+
+---
+
+## ⚡ Quick-Start
+
+### 1️⃣ Clone
+
 ```bash
 git clone https://github.com/ZhaoShuai2332/ml25521.git
 cd ml25521
 ```
 
-### 2. Setup Python Environment  
-Use Python 3.10+ for best compatibility.
+### 2️⃣ Create a Python 3.10+ virtual environment
 
 ```bash
 python -m venv env
-source env/bin/activate     # For Unix/macOS  
-env\Scripts\activate        # For Windows
+# Linux / macOS
+source env/bin/activate
+# Windows
+env\Scripts\activate
 ```
 
-### 3. Install Dependencies  
-Ensure `pip` is updated:
+### 3️⃣ Install requirements
 
 ```bash
 pip install --upgrade pip
@@ -33,61 +73,47 @@ pip install -r piplist.txt
 
 ---
 
-## 🧠 Model Training
+## 🏋️‍♀️ Model Training
 
-### Supported Models  
-- `linear`: Linear Regression  
-- `svr`: Support Vector Regression  
-
-### Supported Datasets  
-- `mnist`  
-- `uci`  
-- `credit`
-
-### Run Training  
 ```bash
 python models/<model_name>.py --name <dataset_name>
 ```
 
-Example:
-```bash
-python models/linear.py --name mnist
+| `<model_name>` | `<dataset_name>` |
+| -------------- | ---------------- |
+| `linear`       | `mnist` \| `uci` \| `credit` |
+| `svr`          | `mnist` \| `uci` \| `credit` |
+
+Artifacts are written to `model_params/` as:
+
 ```
-
-Trained models will be saved in the `model_params/` directory.
-
----
-
-## 💾 Load Saved Parameters
-
-### Load Model Parameters
-```python
-import numpy as np
-import os
-
-params_path = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), 
-    "model_params", 
-    f"{dataset_name}_{model_name}_params.npz"
-)
-params = np.load(params_path)
-```
-
-### Load Scaler Parameters
-```python
-scaler_params_path = os.path.join(
-    os.path.dirname(os.path.dirname(__file__)), 
-    "model_params", 
-    f"{dataset_name}_scaler_params.npz"
-)
-scaler_params = np.load(scaler_params_path)
+{dataset_name}_{model_name}_params.npz
+{dataset_name}_scaler_params.npz
 ```
 
 ---
 
-## 📊 Dataset Loading
+## 🔄 Loading Saved Artifacts
 
-Use the data loading utilities provided under `model_test/commends`.
+```python
+import os, numpy as np
+
+root = os.path.dirname(os.path.dirname(__file__))
+
+params = np.load(
+    os.path.join(root, "model_params",
+                 f"{dataset_name}_{model_name}_params.npz")
+)
+
+scaler_params = np.load(
+    os.path.join(root, "model_params",
+                 f"{dataset_name}_scaler_params.npz")
+)
+```
+
+---
+
+## 🛠 Dataset Utilities
 
 ```python
 import os, sys
@@ -95,17 +121,16 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from model_test.commends import dataset_selecter
 
-train_X, test_X, train_y, test_y = dataset_selecter(name=<dataset_name>)
+train_X, test_X, train_y, test_y = dataset_selecter(name="mnist")
 ```
 
-Valid `dataset_name` values:
-- `mnist`
-- `uci`
-- `credit`
+Valid dataset names: `mnist`, `uci`, `credit`.
 
 ---
 
-## 📁 Data Source
+## 🌐 Data Source
 
-Training datasets are stored in `data/datasets`.  
-**Note**: Due to file size, datasets are not uploaded to the repository.
+Large raw datasets reside in **`data/datasets/`** but are *excluded* from version control to keep the repository lightweight.
+
+But you can access them on my onedrive[https://stummuac-my.sharepoint.com/:f:/r/personal/21901260_stu_mmu_ac_uk/Documents/datasets?csf=1&web=1&e=1Ki0Pk]
+
