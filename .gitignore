@@ -189,3 +189,5 @@ data/datasets/uci_data/X_test.csv
 data/datasets/uci_data/X_train.csv
 data/datasets/uci_data/y_test.csv
 data/datasets/uci_data/y_train.csv
+data/datasets/credit_risk/targeted_data/test_credit.csv
+data/datasets/credit_risk/targeted_data/train_credit.csv
