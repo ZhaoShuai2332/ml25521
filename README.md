@@ -98,7 +98,7 @@ Artifacts are written to `model_params/` as:
 ```python
 import os, numpy as np
 
-root = os.path.dirname(os.path.dirname(__file__))
+root = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 
 params = np.load(
     os.path.join(root, "model_params",
