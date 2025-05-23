@@ -1,38 +1,78 @@
 # ml25521
-## Description:
-周五下午了，想想晚上吃什么。
-## Usage:
-### 1. Fetch project:
-You can cloning this project form [here](https://github.com/ZhaoShuai2332/ml25521.git).
-### 2. Execution environment:
-Skipping to the root path of the project and create python environment (Python 3.10+ is better).
-### 3. Confirm you have installed pip commend and execute this commend:
 
-```shell pip install -r piplist.txt ``` 
-### 4. Training models:
- * This project supports training mnist, uci and credit datasets on Linear Regression and SVR.
- * If there is no other modifies of models, you can execute commend on this format on the root path of the project:
+## Description  
+It is Friday afternoon.
 
-    ```shell python models/<model_name>.py --name <dataset_name>```
+## Usage
 
-    Where the ```model_name``` can be setted as ```svr``` or ```linear```;
-    The ```dataset_name``` can be setted as ```mnist```, ```uci```and ```credit```
-### 5. Loading models parameters:
-* The peremeters of model training are saved on ```model_params```, you can load model parameters by using numpy:
-    ```python
-    import numpy as np
-    import os, sys
+### 1. Clone the Repository  
+Clone the project repository from the following URL:
 
-    self.params_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model_params", f"{dataset_name}_{model_name}_params.npz")
-    params = np.load(params_path)
-    ```
-* Also you can load scaler parameters by:
-    ```python
-    import numpy as np
-    import os, sys
+```bash
+git clone https://github.com/ZhaoShuai2332/ml25521.git
+```
 
-    self.params_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model_params", f"{dataset_name}_scaler_params.npz")
-    params = np.load(params_path)
-    ```
+### 2. Setup Execution Environment  
+Navigate to the project root directory and create a Python virtual environment. It is recommended to use Python version 3.10 or higher for compatibility.
 
+```bash
+python -m venv env
+source env/bin/activate  # On Windows use `env\Scripts\activate`
+```
 
+### 3. Install Dependencies  
+Ensure that `pip` is installed and updated, then install the required packages listed in `piplist.txt`:
+
+```bash
+pip install -r piplist.txt
+```
+
+### 4. Train Models  
+This project supports training on three datasets — MNIST, UCI, and Credit — using either Linear Regression or SVR models.
+
+To train a model, run the following command from the project root:
+
+```bash
+python models/<model_name>.py --name <dataset_name>
+```
+
+- `<model_name>` options:  
+  - `linear` — for Linear Regression  
+  - `svr` — for Support Vector Regression  
+
+- `<dataset_name>` options:  
+  - `mnist`  
+  - `uci`  
+  - `credit`
+
+This command will execute the training process, saving model parameters upon completion.
+
+### 5. Load Pre-trained Model Parameters  
+Trained model parameters are saved in the `model_params` directory in `.npz` format. Use the following Python snippet to load model parameters:
+
+```python
+import numpy as np
+import os
+
+params_path = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)), 
+    "model_params", 
+    f"{dataset_name}_{model_name}_params.npz"
+)
+params = np.load(params_path)
+```
+
+### 6. Load Scaler Parameters  
+To maintain consistent feature scaling, scaler parameters for each dataset are also saved in `model_params`. Load them with:
+
+```python
+import numpy as np
+import os
+
+scaler_params_path = os.path.join(
+    os.path.dirname(os.path.dirname(__file__)), 
+    "model_params", 
+    f"{dataset_name}_scaler_params.npz"
+)
+scaler_params = np.load(scaler_params_path)
+```
