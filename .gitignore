@@ -172,3 +172,20 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+data/datasets/mnist.csv
+data/datasets/credit_risk/original_data/application_test.csv
+data/datasets/credit_risk/original_data/application_train.csv
+data/datasets/credit_risk/original_data/bureau_balance.csv
+data/datasets/credit_risk/original_data/bureau.csv
+data/datasets/credit_risk/original_data/credit_card_balance.csv
+data/datasets/credit_risk/original_data/HomeCredit_columns_description.csv
+data/datasets/credit_risk/original_data/installments_payments.csv
+data/datasets/credit_risk/original_data/POS_CASH_balance.csv
+data/datasets/credit_risk/original_data/previous_application.csv
+data/datasets/credit_risk/original_data/sample_submission.csv
+data/datasets/credit_risk/tagreted_data/test_credit.csv
+data/datasets/credit_risk/tagreted_data/train_credit.csv
+data/datasets/uci_data/X_test.csv
+data/datasets/uci_data/X_train.csv
+data/datasets/uci_data/y_test.csv
+data/datasets/uci_data/y_train.csv
