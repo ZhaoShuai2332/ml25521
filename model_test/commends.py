@@ -1,6 +1,7 @@
 import argparse
 from data.fetch_mnist import MNIST_Fetcher, mnist_path
 from data.fetch_uci import UCI_fetcher
+from data.fetch_credit import CreditFetcher
 import os
 """
 Execute the script with the following command at the root directory of the project:
@@ -30,4 +31,7 @@ def dataset_selecter(name: str):
     elif name == "uci":
         uci_fetcher = UCI_fetcher()
         train_X, test_X, train_y, test_y = uci_fetcher.load_data()
+    elif name == "credit":
+        credit_fetcher = CreditFetcher()
+        train_X, test_X, train_y, test_y = credit_fetcher.load_data(encoding='ohe')
     return train_X, test_X, train_y, test_y
