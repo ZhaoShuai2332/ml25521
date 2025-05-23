@@ -1,55 +1,66 @@
-# ml25521
 
-## Description  
-It is Friday afternoon.
+# 📁 `ml25521` Project Documentation
 
-## Usage
+## 📝 Description  
+It's Friday afternoon now!
+
+---
+
+## 🚀 Quickstart Guide
 
 ### 1. Clone the Repository  
-Clone the project repository from the following URL:
-
 ```bash
 git clone https://github.com/ZhaoShuai2332/ml25521.git
+cd ml25521
 ```
 
-### 2. Setup Execution Environment  
-Navigate to the project root directory and create a Python virtual environment. It is recommended to use Python version 3.10 or higher for compatibility.
+### 2. Setup Python Environment  
+Use Python 3.10+ for best compatibility.
 
 ```bash
 python -m venv env
-source env/bin/activate  # On Windows use `env\Scripts\activate`
+source env/bin/activate     # For Unix/macOS  
+env\Scripts\activate        # For Windows
 ```
 
 ### 3. Install Dependencies  
-Ensure that `pip` is installed and updated, then install the required packages listed in `piplist.txt`:
+Ensure `pip` is updated:
 
 ```bash
+pip install --upgrade pip
 pip install -r piplist.txt
 ```
 
-### 4. Train Models  
-This project supports training on three datasets — MNIST, UCI, and Credit — using either Linear Regression or SVR models.
+---
 
-To train a model, run the following command from the project root:
+## 🧠 Model Training
 
+### Supported Models  
+- `linear`: Linear Regression  
+- `svr`: Support Vector Regression  
+
+### Supported Datasets  
+- `mnist`  
+- `uci`  
+- `credit`
+
+### Run Training  
 ```bash
 python models/<model_name>.py --name <dataset_name>
 ```
 
-- `<model_name>` options:  
-  - `linear` — for Linear Regression  
-  - `svr` — for Support Vector Regression  
+Example:
+```bash
+python models/linear.py --name mnist
+```
 
-- `<dataset_name>` options:  
-  - `mnist`  
-  - `uci`  
-  - `credit`
+Trained models will be saved in the `model_params/` directory.
 
-This command will execute the training process, saving model parameters upon completion.
+---
 
-### 5. Load Pre-trained Model Parameters  
-Trained model parameters are saved in the `model_params` directory in `.npz` format. Use the following Python snippet to load model parameters:
+## 💾 Load Saved Parameters
 
+### Load Model Parameters
 ```python
 import numpy as np
 import os
@@ -62,13 +73,8 @@ params_path = os.path.join(
 params = np.load(params_path)
 ```
 
-### 6. Load Scaler Parameters  
-To maintain consistent feature scaling, scaler parameters for each dataset are also saved in `model_params`. Load them with:
-
+### Load Scaler Parameters
 ```python
-import numpy as np
-import os
-
 scaler_params_path = os.path.join(
     os.path.dirname(os.path.dirname(__file__)), 
     "model_params", 
@@ -76,3 +82,30 @@ scaler_params_path = os.path.join(
 )
 scaler_params = np.load(scaler_params_path)
 ```
+
+---
+
+## 📊 Dataset Loading
+
+Use the data loading utilities provided under `model_test/commends`.
+
+```python
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+
+from model_test.commends import dataset_selecter
+
+train_X, test_X, train_y, test_y = dataset_selecter(name=<dataset_name>)
+```
+
+Valid `dataset_name` values:
+- `mnist`
+- `uci`
+- `credit`
+
+---
+
+## 📁 Data Source
+
+Training datasets are stored in `data/datasets`.  
+**Note**: Due to file size, datasets are not uploaded to the repository.
