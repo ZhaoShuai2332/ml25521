@@ -15,6 +15,7 @@ for dataset_name in dataset_names:
                          f"{dataset_name}_{model_name}_params.npz")
         )
         int_params = {k: v.astype(int) for k, v in params.items()}
+        print(f"{dataset_name}_{model_name}:")
         print(int_params)
         np.savez(
             os.path.join(output_dir,
