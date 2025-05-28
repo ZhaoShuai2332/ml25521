@@ -1,0 +1,57 @@
+# class Linear:
+#     def __init__(self, name: str,
+#                  X_train: np.ndarray, y_train: np.ndarray,
+#                  X_test: np.ndarray,  y_test: np.ndarray):
+#         base_dir = os.path.dirname(os.path.dirname(__file__))
+#         self.params_path = os.path.join(base_dir, "model_params", f"{name}_linear_params.npz")
+#         self.scaler_path = os.path.join(base_dir, "model_params", f"{name}_standard_scaler_params.npz")
+
+#         self.X_train, self.y_train = X_train, y_train
+#         self.X_test,  self.y_test  = X_test,  y_test
+
+#         self.pipeline = Pipeline([
+#             ("scaler", StandardScaler()),
+#             ("regressor", LinearRegression())
+#         ])
+
+#         self.loaded = False
+#         if os.path.exists(self.params_path) and os.path.exists(self.scaler_path):
+#             print(f"Loading model params from {self.params_path}")
+#             params = np.load(self.params_path)
+#             reg = self.pipeline.named_steps["regressor"]
+#             reg.coef_ = params["coef"]
+#             reg.intercept_ = params["intercept"]
+
+#             print(f"Loading scaler params from {self.scaler_path}")
+#             scaler_params = np.load(self.scaler_path)
+#             scaler = self.pipeline.named_steps["scaler"]
+#             scaler.mean_ = scaler_params["mean"]
+#             scaler.scale_ = scaler_params["scale"]
+#             scaler.var_ = scaler.scale_ ** 2
+#             scaler.n_samples_seen_ = X_train.shape[0]
+
+#             self.loaded = True
+
+#     def fit(self):
+#         if self.loaded:
+#             print("Parameters already loaded; skipping fit.")
+#             return
+
+#         self.pipeline.fit(self.X_train, self.y_train)
+
+#         reg = self.pipeline.named_steps["regressor"]
+#         np.savez(self.params_path,
+#                  coef=reg.coef_,
+#                  intercept=reg.intercept_)
+
+#         scaler = self.pipeline.named_steps["scaler"]
+#         np.savez(self.scaler_path,
+#                  mean = scaler.mean_,
+#                  scale= scaler.scale_)
+
+#     def predict(self) -> np.ndarray:
+#         return self.pipeline.predict(self.X_test)
+
+#     def get_params(self):
+#         reg = self.pipeline.named_steps["regressor"]
+#         return reg.coef_, reg.intercept_

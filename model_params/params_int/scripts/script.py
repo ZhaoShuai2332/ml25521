@@ -6,7 +6,7 @@ output_dir = os.path.join(root, "params_int")
 os.makedirs(output_dir, exist_ok=True)
 
 dataset_names = ["mnist", "uci", "credit"]
-model_names = ["linear", "svr", 'scaler']
+model_names = ["linear", "svr", 'min_max_scaler']
 
 for dataset_name in dataset_names:
     for model_name in model_names:
