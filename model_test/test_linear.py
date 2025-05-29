@@ -15,6 +15,8 @@ def linear(name: str):
     model = Linear(name, train_X, train_y, test_X, test_y)
     model.fit()
     predictions = model.predict()
+    # np.set_printoptions(threshold=np.inf)
+    # print(predictions) 
     mse = mean_squared_error(test_y, predictions)
     rmse = np.sqrt(mse)
     mae = mean_absolute_error(test_y, predictions)
