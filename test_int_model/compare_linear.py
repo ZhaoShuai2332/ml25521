@@ -16,7 +16,8 @@ def get_regression() -> (np.ndarray, np.ndarray):
     '''Load dataset, train Linear model, and return predictions and true labels.'''
     args = commends.parse_args()
     train_X, test_X, train_y, test_y = commends.dataset_selecter(args.name)
-    linear = Linear(args.name, train_X, train_y, test_X, test_y, load_integer=True)
+    # linear = Linear(args.name, train_X, train_y, test_X, test_y, load_integer=True)
+    linear = Linear(args.name, train_X, train_y, test_X, test_y, load_integer=False)
     linear.fit()
     preds = linear.predict()
     # print("All prediction values:")

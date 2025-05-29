@@ -16,29 +16,27 @@ class Linear:
         self.y_scaler_path = os.path.join(base_dir, "model_params", f"{name}_y_min_max_scaler_params.npz")
 
         # X 的归一化范围
-        min_max_range = {
-            "mnist":(-0.001, 0.001),
-            "uci":(-0.001, 0.001),
-            "credit":(-0.00001,0.00001)
-        }
+        # min_max_range = {
+        #     "mnist":(-0.001, 0.001),
+        #     "uci":(-0.001, 0.001),
+        #     "credit":(-0.00001,0.00001)
+        # }
 
         # 原始数据
         self.X_train, raw_y_train = X_train, y_train
         self.X_test,  raw_y_test  = X_test,  y_test
 
-        # 对 y 做 [0, 1] 归一化
         self.y_scaler = MinMaxScaler(feature_range=(0, 1))
         self.y_train = self.y_scaler.fit_transform(raw_y_train.reshape(-1, 1)).ravel()
         self.y_test  = self.y_scaler.transform( raw_y_test.reshape(-1, 1)).ravel()
 
-        # 构建只对 X 做归一化的 pipeline
         self.pipeline = Pipeline([
-            ("scaler", MinMaxScaler(feature_range=min_max_range[name])),  # 处理 X
+            # ("scaler", MinMaxScaler(feature_range=min_max_range[name])),  # 处理 X
+            ("scaler", MinMaxScaler()),
             ("regressor", LinearRegression())
         ])
 
         self.loaded = False
-        # 如果需要加载已有整数模型参数，这里可参照原逻辑加载
         if load_integer and os.path.exists(self.params_path) and os.path.exists(self.scaler_path):
             print(f"Loading model params from {self.params_path}")
             params = np.load(self.params_path)
@@ -75,16 +73,13 @@ class Linear:
             print("Parameters already loaded; skipping fit.")
             return
 
-        # 训练模型（X 已缩放，y 已在 [0,1]）
         self.pipeline.fit(self.X_train, self.y_train)
 
-        # 保存线性回归参数
         reg = self.pipeline.named_steps["regressor"]
         np.savez(self.params_path,
                  coef=reg.coef_,
                  intercept=reg.intercept_)
 
-        # 保存 X_scaler 参数
         scaler = self.pipeline.named_steps["scaler"]
         np.savez(self.scaler_path,
                  min=scaler.min_,
