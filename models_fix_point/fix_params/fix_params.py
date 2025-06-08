@@ -28,6 +28,7 @@ def parse_params_name(dataset_name : str, model_name : str, params_keys : list):
         arr = params[k]
         if k in params_keys:
             fixed_arr = parse_float(arr, frac_bits=32)
+            # fixed_arr = arr
             new_params[k] = fixed_arr
             # print(f"Converted {k}: {fixed_arr}")
         else:

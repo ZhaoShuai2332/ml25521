@@ -5,7 +5,6 @@ sys.path.append(parent_dir)
 import numpy as np
 from models_fix_point.fix_interface.fix_point_transfer import FixedPoint
 
-
 class Linear_fix:
     def __init__(self, 
                X_train : np.ndarray, 
@@ -29,6 +28,7 @@ class Linear_fix:
             res = np.dot(x, self.weight) + bias_fp
             res_list.append(res)
         return np.array(res_list).flatten()
+        # return (np.dot(self.X_test, self.weight) + self.bias).flatten()
     
     def evl(self):
         y_pred = self.predict()
